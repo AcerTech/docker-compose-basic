@@ -1,0 +1,52 @@
+# Docker compose 
+# --------------
+# docker container is an instance of docker image.(so, when we run an image it become a container. we can create many containers from one image)
+
+# To list all images:
+# docker images 
+
+# To remove an image (-f = forced):
+# docker rmi -f my_image_id
+
+# To create a container:
+# docker run -d --name my_container mysql
+
+# TO list all containers:
+# docker container ls
+
+# To remove a container (-f remove even if the container is running):
+# docker rm -f my_container_id
+
+# To remove the container with thier volumes:
+# docker rm -f -v my_container_id 
+
+# To remove all not used volumes:
+# docker volume prune
+
+# To run this:
+# docker-compose up --b
+
+# To stop & remove all running containers:
+# docker-compose down
+
+version: '3.7'
+services:
+    postgres:
+        image: postgres:9.6
+        environment:
+            - POSTGRES_USER=airflow
+            - POSTGRES_PASSWORD=airflow
+            - POSTGRES_DB=airflow
+        ports: 
+            - 5432:5432
+        logging:
+            options:
+                max-size: 10m
+                max-file: "3"
+    pgadmin:
+        image: dpage/pgadmin4
+        environment: 
+            - PGADMIN_DEFAULT_EMAIL=your_email_here
+            - PGADMIN_DEFAULT_PASSWORD=your_password_here
+        ports: 
+            - "5050:80"
